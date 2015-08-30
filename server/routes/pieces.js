@@ -21,8 +21,8 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-// CREATE -- localhost:3000/api/v1/paintings
-router.post('/paintings', function(req, res) {
+// CREATE -- localhost:3000/api/v1/pieces
+router.post('/pieces', function(req, res) {
   var data = {
     title: req.body.title,
     description: req.body.description,
@@ -37,16 +37,16 @@ router.post('/paintings', function(req, res) {
 
 });
 
-// READ -- localhost:3000/api/v1/paintings/
-router.get('/paintings', function(req, res) {
+// READ -- localhost:3000/api/v1/pieces/
+router.get('/pieces', function(req, res) {
   Piece.findAll().then(function(pieces) {
     res.json(pieces);
   });
 });
 
-// UPDATE -- localhost:3000/api/v1/paintings/:painting_id
-router.put('/paintings/:painting_id', function(req, res) {
-  var id = req.params.painting_id;
+// UPDATE -- localhost:3000/api/v1/pieces/:piece_id
+router.put('/pieces/:piece_id', function(req, res) {
+  var id = req.params.piece_id;
   var data = {
     title: req.body.title,
     description: req.body.description,
@@ -55,26 +55,26 @@ router.put('/paintings/:painting_id', function(req, res) {
   };
 
   pg.connect(connectionString, function(err, client, done) {
-    client.query("UPDATE paintings SET title=($1), description=($2), price=($3), dimension=($4) WHERE id=($3)",
+    client.query("UPDATE pieces SET title=($1), description=($2), price=($3), dimension=($4) WHERE id=($3)",
     [data.title,
      data.description,
      data.price,
      data.dimension,
      id]);
 
-     selectAll(err, client, done, 'paintings', function(results) {
+     selectAll(err, client, done, 'pieces', function(results) {
        res.json(results);
      });
   });
 });
 
-// DESTROY -- localhost:3000/api/v1/paintings/:painting_id
-router.delete('/paintings/:painting_id', function(req, res) {
-  var id = req.params.painting_id;
+// DESTROY -- localhost:3000/api/v1/pieces/:piece_id
+router.delete('/pieces/:piece_id', function(req, res) {
+  var id = req.params.piece_id;
 
   pg.connect(connectionString, function(err, client, done) {
-    client.query("DELETE FROM paintings WHERE id=($1)", [id]);
-    selectAll(err, client, done, 'paintings', function(results) {
+    client.query("DELETE FROM pieces WHERE id=($1)", [id]);
+    selectAll(err, client, done, 'pieces', function(results) {
       res.json(results);
     });
   });
