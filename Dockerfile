@@ -10,5 +10,7 @@ COPY . /src
 # Install app dependencies
 RUN cd /src; npm install
 
+CMD ["node", "/src/server/models/database.js"]
+
 EXPOSE 8080
 CMD ["node", "/src/app.js"]
