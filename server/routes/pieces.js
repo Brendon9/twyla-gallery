@@ -46,25 +46,16 @@ router.get('/pieces', function(req, res) {
 
 // UPDATE -- localhost:3000/api/v1/pieces/:piece_id
 router.put('/pieces/:piece_id', function(req, res) {
-  var id = req.params.piece_id;
-  var data = {
-    title: req.body.title,
-    description: req.body.description,
-    price: req.body.price,
-    dimension: req.body.dimension
-  };
-
-  pg.connect(connectionString, function(err, client, done) {
-    client.query("UPDATE pieces SET title=($1), description=($2), price=($3), dimension=($4) WHERE id=($3)",
-    [data.title,
-     data.description,
-     data.price,
-     data.dimension,
-     id]);
-
-     selectAll(err, client, done, 'pieces', function(results) {
-       res.json(results);
-     });
+  Piece.findById(req.params.piece_id).then(function(piece) {
+    piece.updateAttributes({
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      dimension: req.body.dimension,
+      type: req.body.type
+    }).then(function(piece) {
+      res.json(piece);
+    });
   });
 });
 

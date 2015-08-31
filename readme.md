@@ -47,6 +47,30 @@ API Endpoints:
 | /api/v1/pieces/:piece_id  | PUT  | Update an art piece  |
 | /api/v1/pieces/:piece_id  | DELETE  | Delete an art piece  |
 
+CURL CMDs for Testing:
+----------------------
+
+POST some data:
+```
+curl --data "title=David&description=David is a masterpiece of Renaissance sculpture created between 1501 and 1504, by Michelangelo&price=15000000&dimension=14ft&type=sculpture" $(boot2docker ip):18080/api/v1/pieces
+```
+
+GET the data:
+```
+curl -X GET $(boot2docker ip):18080/api/v1/pieces
+```
+
+UPDATE the data:
+```
+curl --data "price=17500000" -X PUT $(boot2docker ip):18080/api/v1/pieces/1
+```
+
+DELETE the data:
+```
+curl -X DELETE $(boot2docker ip):18080/api/v1/pieces/1
+```
+
+
 TODO:
 =====
 
