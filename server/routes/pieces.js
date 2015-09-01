@@ -44,6 +44,12 @@ router.get('/pieces', function(req, res) {
   });
 });
 
+router.get('/pieces/:piece_id', function(req, res) {
+  Piece.findById(req.params.piece_id).then(function(piece) {
+    res.json(piece);
+  });
+});
+
 // UPDATE -- localhost:3000/api/v1/pieces/:piece_id
 router.put('/pieces/:piece_id', function(req, res) {
   Piece.findById(req.params.piece_id).then(function(piece) {
